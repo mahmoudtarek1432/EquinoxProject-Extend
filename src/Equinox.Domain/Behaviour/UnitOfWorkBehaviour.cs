@@ -25,6 +25,8 @@ namespace Equinox.Domain.Behaviour
         {
             var CommandResponse = await next();
 
+            if(CommandResponse.Errors.Any()) return CommandResponse;
+
             var commitResult = await _baseRepo.UnitOfWork.Commit();
 
             if (!commitResult)

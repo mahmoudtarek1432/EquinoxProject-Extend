@@ -38,6 +38,7 @@ builder.Services.AddSwaggerConfiguration();
 // Adding MediatR for Domain Events and Notifications
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
+//passes validatiors through the running assemblies
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 // .NET Native DI Abstraction
