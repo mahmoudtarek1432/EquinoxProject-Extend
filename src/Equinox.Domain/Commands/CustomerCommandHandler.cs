@@ -24,7 +24,7 @@ namespace Equinox.Domain.Commands
 
         public async Task<ValidationResult> Handle(RegisterNewCustomerCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return message.ValidationResult;
+            //replaced with pipeline behavior validation
 
             var customer = new Customer(Guid.NewGuid(), message.Name, message.Email, message.BirthDate);
 
@@ -33,17 +33,17 @@ namespace Equinox.Domain.Commands
                 AddError("The customer e-mail has already been taken.");
                 return ValidationResult;
             }
-
+            
             customer.AddDomainEvent(new CustomerRegisteredEvent(customer.Id, customer.Name, customer.Email, customer.BirthDate));
 
             _customerRepository.Add(customer);
 
-            return await Commit(_customerRepository.UnitOfWork);
+            return ValidationResult;
         }
 
         public async Task<ValidationResult> Handle(UpdateCustomerCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return message.ValidationResult;
+            //replaced with pipeline behavior validation
 
             var customer = new Customer(message.Id, message.Name, message.Email, message.BirthDate);
             var existingCustomer = await _customerRepository.GetByEmail(customer.Email);
@@ -61,12 +61,12 @@ namespace Equinox.Domain.Commands
 
             _customerRepository.Update(customer);
 
-            return await Commit(_customerRepository.UnitOfWork);
+            return ValidationResult;
         }
 
         public async Task<ValidationResult> Handle(RemoveCustomerCommand message, CancellationToken cancellationToken)
         {
-            if (!message.IsValid()) return message.ValidationResult;
+            //replaced with pipeline behavior validation
 
             var customer = await _customerRepository.GetById(message.Id);
 
@@ -80,7 +80,7 @@ namespace Equinox.Domain.Commands
 
             _customerRepository.Remove(customer);
 
-            return await Commit(_customerRepository.UnitOfWork);
+            return ValidationResult;
         }
 
         public void Dispose()

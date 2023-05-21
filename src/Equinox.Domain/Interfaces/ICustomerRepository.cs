@@ -6,7 +6,7 @@ using NetDevPack.Data;
 
 namespace Equinox.Domain.Interfaces
 {
-    public interface ICustomerRepository : IRepository<Customer>, IRepositoryBase<Customer>
+    public interface ICustomerRepository : IRepositoryBase<Customer>
     {
         Task<Customer> GetByEmail(string email);
 

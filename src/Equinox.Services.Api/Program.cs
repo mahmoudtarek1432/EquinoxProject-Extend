@@ -1,8 +1,10 @@
 using Equinox.Infra.CrossCutting.Identity;
 using Equinox.Services.Api.Configurations;
+using FluentValidation;
 using MediatR;
 using NetDevPack.Identity;
 using NetDevPack.Identity.User;
+using System.Runtime.CompilerServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,8 @@ builder.Services.AddSwaggerConfiguration();
 
 // Adding MediatR for Domain Events and Notifications
 builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 // .NET Native DI Abstraction
 builder.Services.AddDependencyInjectionConfiguration();
