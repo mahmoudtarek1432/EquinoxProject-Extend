@@ -1,5 +1,7 @@
 ﻿using Equinox.Domain.Models;
+using Equinox.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using NetDevPack.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,12 @@ namespace Equinox.Infra.Data.Repository
 {
     public abstract class Repositorybase<T> : IRepositoryBase<T> where T : class
     {
+        private EquinoxContext db;
         private DbContext _ctx;
-        protected Repositorybase(DbContext ctx) {
+        public IUnitOfWork UnitOfWork => db;
+        protected Repositorybase(DbContext ctx, EquinoxContext equinoxContext) {
             _ctx = ctx;
+            db = equinoxContext;
         }
         public void Add(T customer)
         {

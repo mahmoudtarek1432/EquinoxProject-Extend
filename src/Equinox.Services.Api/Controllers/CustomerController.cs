@@ -10,7 +10,6 @@ using NetDevPack.Identity.Authorization;
 
 namespace Equinox.Services.Api.Controllers
 {
-    [Authorize]
     public class CustomerController : ApiController
     {
         private readonly ICustomerAppService _customerAppService;
