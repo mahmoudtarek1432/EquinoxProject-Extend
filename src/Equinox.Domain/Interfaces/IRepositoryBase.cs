@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System;
 using NetDevPack.Domain;
 using NetDevPack.Data;
+using System.Linq.Expressions;
+using System.Linq;
 
 namespace Equinox.Domain.Interfaces
 {
@@ -11,16 +13,20 @@ namespace Equinox.Domain.Interfaces
     {
         IUnitOfWork UnitOfWork { get; }
 
-        public Task<T> GetById(Guid id);
+        public Task<IReadOnlyList<T>> GetAllAsync();
 
-        public List<T> FilterByPredicate(Func<T, bool> predicate);
+        public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
 
-        public Task<IEnumerable<T>> GetAll();
+        public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeString = null, bool disableTracking = true);
 
-        public void Add(T customer);
+        public Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<Expression<Func<T, object>>> includes = null, bool disableTracking = true);
 
-        public void Update(T customer);
+        public Task<T> GetByIdAsync(int id);
 
-        public void Remove(T customer);
+        public Task<T> AddAsync(T entity);
+
+        public Task UpdateAsync(T entity);
+
+        public Task DeleteAsync(T entity);
     }
 }
