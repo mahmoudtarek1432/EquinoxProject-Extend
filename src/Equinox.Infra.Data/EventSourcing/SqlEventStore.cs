@@ -6,12 +6,12 @@ using Newtonsoft.Json;
 
 namespace Equinox.Infra.Data.EventSourcing
 {
-    public class SqlEventStore : IEventStore
+    public class EventStore : IEventStore
     {
         private readonly IEventStoreRepository _eventStoreRepository;
         private readonly IAspNetUser _user;
 
-        public SqlEventStore(IEventStoreRepository eventStoreRepository, IAspNetUser user)
+        public EventStore(IEventStoreRepository eventStoreRepository, IAspNetUser user)
         {
             _eventStoreRepository = eventStoreRepository;
             _user = user;
